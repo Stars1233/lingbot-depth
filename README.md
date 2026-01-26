@@ -260,5 +260,5 @@ This work builds upon several excellent open-source projects:
 For questions, discussions, or collaborations:
 
 - **Issues**: Open an [issue](https://github.com/robbyant/lingbot-depth/issues) on GitHub
-- **Email**: Contact tanbin.tan@antgroup.com, xuenan.xue@antgroup.com
+- **Email**: Contact Dr. [Bin Tan](https://https://icetttb.github.io/) (tanbin.tan@antgroup.com) or Dr. [Nan Xue](https://xuenan.net) xuenan.xue@antgroup.com
 
