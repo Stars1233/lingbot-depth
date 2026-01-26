@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Python 3.9+](https://img.shields.io/badge/pytorch-2.6+-green.svg)](https://www.python.org/downloads/)
+[![PyTorch 2.6+](https://img.shields.io/badge/pytorch-2.6+-green.svg)](https://pytorch.org/)
 
 📝 **[arXiv](https://arxiv.org/abs/2601.xxxxx)** |
 📄 **[Technical Report](https://github.com/Robbyant/lingbot-depth/blob/main/tech-report.pdf)** |
@@ -23,7 +23,7 @@ Our approach refines raw sensor depth into clean, complete measurements, enablin
 - **4D Point Tracking**: Accurate dynamic tracking in metric space for robot learning
 - **Dexterous Manipulation**: Robust grasping with precise geometric understanding
 
-## Artifcats Release
+## Artifacts Release
 
 
 ### Model Zoo
@@ -73,13 +73,16 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = MDMModel.from_pretrained('ckpt/model.pt').to(device)
 
 # Load and prepare inputs
-image = cv2.imread('examples/0/rgb.png')
+image = cv2.cvtColor(cv2.imread('examples/0/rgb.png'), cv2.COLOR_BGR2RGB)
+h, w = image.shape[:2]
 image = torch.tensor(image / 255, dtype=torch.float32, device=device).permute(2, 0, 1)[None]
 
 depth = cv2.imread('examples/0/raw_depth.png', cv2.IMREAD_UNCHANGED).astype(np.float32) / 1000.0
 depth = torch.tensor(depth, dtype=torch.float32, device=device)[None]
 
 intrinsics = np.loadtxt('examples/0/intrinsics.txt')
+intrinsics[0] /= w  # Normalize fx and cx by width
+intrinsics[1] /= h  # Normalize fy and cy by height
 intrinsics = torch.tensor(intrinsics, dtype=torch.float32, device=device)[None]
 
 # Run inference
@@ -123,11 +126,11 @@ Our model is trained on a large-scale diverse dataset combining real-world and s
   <img src="assets/dataset/diversity_figure.png" width="100%">
 </p>
 
-**Training dataset.** 2.1M real-world and 1.0M simulated samples spanning diverse indoor environments (top). Representative RGB-D inputs with ground truth depth (bottom).
+**Training dataset.** 2M real-world and 1M simulated samples spanning diverse indoor environments (top). Representative RGB-D inputs with ground truth depth (bottom).
 
 **Dataset Composition:**
-- **Real Captures**: 2.1M samples from residential, office, and commercial environments
-- **Simulated Data**: 1.0M photo-realistic renders with perfect ground truth
+- **Real Captures**: 2M samples from residential, office, and commercial environments
+- **Simulated Data**: 1M photo-realistic renders with perfect ground truth
 - **Modalities**: RGB images, raw depth, refined ground truth depth
 - **Diversity**: Multiple sensor types, lighting conditions, and scene complexities
 
@@ -223,7 +226,7 @@ If you find this work useful for your research, please cite:
 @article{lingbot-depth2026,
   title={Masked Depth Modeling for Spatial Perception},
   author={Tan, Bin and Sun, Changjiang and Qin, Xiage and Adai, Hanat and Fu, Zelin and Zhou, Tianxiang and Zhang, Han and Xu, Yinghao and Zhu, Xing and Shen, Yujun and Xue, Nan},
-  journal={arXiv preprint arXiv:2401.xxxxx},
+  journal={arXiv preprint arXiv:2601.xxxxx},
   year={2026}
 }
 ```
