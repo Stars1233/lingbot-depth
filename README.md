@@ -26,8 +26,11 @@ Our approach refines raw sensor depth into clean, complete measurements, enablin
 - **4D Point Tracking**: Accurate dynamic tracking in metric space for robot learning
 - **Dexterous Manipulation**: Robust grasping with precise geometric understanding
 
-## Artifacts Release
+## News
 
+- **[2026.02.15]** Upload LingBot-Depth-v0.5 which fixes the bug in previous version.
+
+## Artifacts Release
 
 ### Model Zoo
 
@@ -35,7 +38,8 @@ We provide pretrained models for different scenarios:
 
 | Model | Hugging Face Model | ModelScope Model | Description |
 |-------|-----------|-----------|-------------|
-| LingBot-Depth | [robbyant/lingbot-depth-pretrain-vitl-14](https://huggingface.co/robbyant/lingbot-depth-pretrain-vitl-14/tree/main) | [robbyant/lingbot-depth-pretrain-vitl-14](https://www.modelscope.cn/models/Robbyant/lingbot-depth-pretrain-vitl-14)| General-purpose depth refinement |
+| LingBot-Depth-v0.5 | [robbyant/lingbot-depth-pretrain-vitl-14-v0.5](https://huggingface.co/robbyant/lingbot-depth-pretrain-vitl-14-v0.5/tree/main) | [robbyant/lingbot-depth-pretrain-vitl-14-v0.5](https://www.modelscope.cn/models/Robbyant/lingbot-depth-pretrain-vitl-14-v0.5)| ⭐ **Recommended!** General-purpose depth refinement and completion (fixes the bug in LingBot-Depth-v0.1)|
+| LingBot-Depth-v0.1 | [robbyant/lingbot-depth-pretrain-vitl-14](https://huggingface.co/robbyant/lingbot-depth-pretrain-vitl-14/tree/main) | [robbyant/lingbot-depth-pretrain-vitl-14](https://www.modelscope.cn/models/Robbyant/lingbot-depth-pretrain-vitl-14)| General-purpose depth refinement |
 | LingBot-Depth-DC | [robbyant/lingbot-depth-postrain-dc-vitl14](https://huggingface.co/robbyant/lingbot-depth-postrain-dc-vitl14/tree/main) | [robbyant/lingbot-depth-postrain-dc-vitl14](https://www.modelscope.cn/models/Robbyant/lingbot-depth-postrain-dc-vitl14)| Optimized for sparse depth completion |
 
 ### Data Release (Coming Soon)
@@ -71,7 +75,7 @@ from mdm.model.v2 import MDMModel
 
 # Load model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = MDMModel.from_pretrained('robbyant/lingbot-depth-pretrain-vitl-14').to(device)
+model = MDMModel.from_pretrained('robbyant/lingbot-depth-pretrain-vitl-14-v0.5').to(device)
 
 # Load and prepare inputs
 image = cv2.cvtColor(cv2.imread('examples/0/rgb.png'), cv2.COLOR_BGR2RGB)
@@ -108,7 +112,7 @@ python example.py
 python example.py --example 1
 
 # Use depth completion optimized model
-python example.py --model robbyant/lingbot-depth-postrain-dc-vitl14
+python example.py --model robbyant/lingbot-depth-postrain-dc-vitl14-v0.5
 
 # Custom output directory
 python example.py --output my_results
