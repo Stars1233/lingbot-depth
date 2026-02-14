@@ -184,7 +184,7 @@ Examples:
     )
     parser.add_argument(
         '--model', type=str,
-        default='robbyant/lingbot-depth-pretrain-vitl-14',
+        default='robbyant/lingbot-depth-pretrain-vitl-14-v0.5',
         help='Model path or Hugging Face ID (default: robbyant/lingbot-depth-pretrain-vitl-14)'
     )
     parser.add_argument(
